@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project display webpage</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-info {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        section {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--secondary-color);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .card-title {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .progress-container {
+            margin-top: 2rem;
+        }
+        
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .milestone {
+            display: flex;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+        
+        .milestone-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .milestone-content {
+            flex-grow: 1;
+        }
+        
+        .milestone-date {
+            color: var(--dark-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .milestone-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-member {
+            text-align: center;
+        }
+        
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--light-color);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .member-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .member-role {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .document-list {
+            list-style: none;
+        }
+        
+        .document-item {
+            background-color: var(--light-color);
+            padding: 1rem;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 1rem;
+            border-radius: 0 4px 4px 0;
+            transition: transform 0.3s;
+        }
+        
+        .document-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .document-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .document-icon {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--light-color);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .contact-info {
+            margin-top: 1rem;
+        }
+        
+        .contact-info a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="project-title">Simulation of a Virtual Cryptocurrency Trading Platform</h1>
+            <div class="team-info">The MSc Computer Science Project at the University of Hong Kong</div>
+        </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#overview">Project overview</a></li>
+            <li><a href="#progress">Progress tracking</a></li>
+            <li><a href="#milestones">Milestone</a></li>
+            <li><a href="#team">Team members</a></li>
+            <li><a href="#documents">Documentation</a></li>
+ 	    <li><a href="#documents">Conference records</a></li>
+        </ul>
+    </nav>
+    
+    <main class="container">
+        <section id="overview">
+            <h2 class="section-title">Project overview</h2>
+            <div class="card">
+                <h3 class="card-title">Aim</h3>
+                <p>This project aims to design and develop a simulated cryptocurrency trading platform that provides users with a secure and comprehensive environment for practicing and enhancing trading skills. The platform integrates core functions such as user account management, wallet tracking, and transaction processing, allowing users to customize virtual fund allocations and conduct realistic simulated transactions. Additionally, the platform offers market data visualization, including historical and real-time price charts and trading activity tracking, helping users make informed decisions based on market conditions. Furthermore, trading strategies can be tested using backtesting capabilities, which include selecting historical data, defining strategies, simulating execution, and evaluating results to further assist users in optimizing their trading decisions.。</p>
+                <p>One of the platform's key features is an AI-driven education module that acts as an intelligent assistant during the trading process. By analyzing historical data and user behavior, it evaluates decisions, offers suggestions to optimize strategies, and identifies areas for improvement. The module also analyzes potential profit and loss probabilities, suggests alternative trading options, and checks if the user's actions align with market trends.
+</p>
+                <p>Overall, the platform provides multilingual support and leverages technology, data analytics, and financial education to help users better understand market trends, enhance trading confidence, and continuously optimize trading strategies in a low-risk environment.
+</p>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">technical method
+</h3>
+                <p>This project will adopt the following technologies and methods:</p>
+                <ul>
+                    <li>AI-Driven model</li>
+                    <li>Front-end Development</li>
+                    <li>Back-end Development</li>
+
+                </ul>
+            </div>
+
+        </section>
+        
+        <section id="progress">
+            <h2 class="section-title">Progress tracking</h2>
+            <div class="card">
+                <h3 class="card-title">Overall progress</h3>
+                <div class="progress-container">
+                    <div class="progress-item">
+                        <div class="progress-title">
+                            <span>Project completion rate</span>
+                            <span>10%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 10%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-title">
+                            <span>data collection</span>
+                            <span>15%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 15%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-title">
+                            <span>algorithm development</span>
+                            <span>10%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 10%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-title">
+                            <span>system integration
+</span>
+                            <span>20%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 20%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-title">
+                            <span>Test and Evaluate</span>
+                            <span>0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">Recent updates</h3>
+                <p><strong> 2025.3.20：</strong>。。。。。</p>
+                <p><strong>Year Month Day 2025：</strong>。。。。。</p>
+                <p><strong>Year Month Day 2025：</strong>。。。。。</p>
+            </div>
+        </section>
+        
+        <section id="milestones">
+            <h2 class="section-title">Project milestones</h2>
+            <div class="card">
+                <div class="milestone">
+                    <div class="milestone-icon">1</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/03/17</div>
+                        <h4 class="milestone-title">Feature Design</h4>
+                        <p>Feature Design and Technical Preparation for frontend, backend and AI part
+(All deployment related preparation: database registration, service deployment platform registration, etc)
+
+</p>
+                    </div>
+                </div>
+                
+                <div class="milestone">
+                    <div class="milestone-icon">2</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/03/24 </div>
+                        <h4 class="milestone-title">
+AI module</h4>
+                        <p>-model selection and all data preparation process
+-virtual machine preparation</p>
+                    </div>
+                </div>
+                
+                <div class="milestone">
+                    <div class="milestone-icon">3</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/04/07</div>
+                        <h4 class="milestone-title">
+AI module</h4>
+                        <p>.-chatbot: financial terminologies</p>
+                    </div>
+                </div>
+                
+                <div class="milestone">
+                    <div class="milestone-icon">4</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/04/07</div>
+                        <h4 class="milestone-title">User module</h4>
+                        <p>login, register, authentication, user metadata, etc
+-frontend implementation
+-backend database design and implementation for module related APIs
+-integration and test
+-database initiation and service deployment process
+</p>
+                    </div>
+                </div>
+                
+                <div class="milestone">
+                    <div class="milestone-icon">5</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/04/21</div>
+                        <h4 class="milestone-title">System testing</h4>
+                        <p>AI module
+-sentiment analysis on market news
+</p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">6</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/04/21</div>
+                        <h4 class="milestone-title">My-Wallet module
+</h4>
+                        <p>-encryption design(wallet address, private key management, etc)
+-frontend implementation
+-backend database design and implementation for module related APIs
+
+</p>
+                    </div>
+                </div>                
+
+                <div class="milestone">
+                    <div class="milestone-icon">7</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/05/30</div>
+                        <h4 class="milestone-title">Historical Market Data and Backtest module</h4>
+                        <p>-frontend implementation
+-backend database design and implementation for module related APIs
+
+</p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">8</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/05/30</div>
+                        <h4 class="milestone-title">AI module</h4>
+                        <p>-visualize and report user investment portfolio
+</p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">9</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/06/01</div>
+                        <h4 class="milestone-title">Interim Report and Presentation Preparation
+
+</h4>
+                        <p>Interim Report and Presentation Preparation
+
+
+</p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">10</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/06/30</div>
+                        <h4 class="milestone-title">Real Time Simulation module</h4>
+                        <p>Real Time Simulation module
+</p>
+                    </div>
+                </div>
+                <div class="milestone">
+                    <div class="milestone-icon">11</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/06/30
+
+</div>
+                        <h4 class="milestone-title">AI Module</h4>
+                        <p>-user investment behavior analysis and investment suggestions
+
+</p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">12</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/07/15</div>
+                        <h4 class="milestone-title">Final Integration and Test</h4>
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">13</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">2025/07/18</div>
+                        <h4 class="milestone-title">Project Report and Presentation Preparation</h4>
+                        <p>Prepare final report and presentation, evaluate project outcomes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="team">
+            <h2 class="section-title">Team members</h2>
+            <div class="team-grid">
+                <div class="card team-member">
+                    <div class="member-avatar">KX</div>
+                    <h3 class="member-name">Kexin Li</h3>
+                    <p class="member-role">project leader</p>
+        
+                </div>
+                
+                <div class="card team-member">
+                    <div class="member-avatar">ZQ</div>
+                    <h3 class="member-name">Ziqi Wang</h3>
+                </div>
+                
+                <div class="card team-member">
+                    <div class="member-avatar">HT</div>
+                    <h3 class="member-name">Haitao Li</h3>
+                </div>
+                
+                <div class="card team-member">
+                    <div class="member-avatar">ZH</div>
+                    <h3 class="member-name">Zihan Li</h3>
+
+                </div>
+
+                <div class="card team-member">
+                    <div class="member-avatar">YJ</div>
+                    <h3 class="member-name">Yujian Xie</h3>
+                </div>
+            </div>
+        </section>
+        
+        <section id="documents">
+            <h2 class="section-title">DOCUMENTATION</h2>
+            <div class="card">
+                <ul class="document-list">
+                    <li class="document-item">
+                        <a href="#" class="document-link">
+                            <span class="document-icon">📄</span>
+                            project plan                         </a>
+                    </li>
+                    <li class="document-item">
+                        <a href="#" class="document-link">
+                            <span class="document-icon">📄</span>
+                            Requirements Analysis Document (2025-02-05)
+                        </a>
+                    </li>
+                    <li class="document-item">
+                        <a href="#" class="document-link">
+                            <span class="document-icon">📄</span>
+                            System Design Document                         </a>
+                    </li>
+                    <li class="document-item">
+                        <a href="#" class="document-link">
+                            <span class="document-icon">📊</span>
+                            Data Collection Report                        </a>
+                    </li>
+                    <li class="document-item">
+                        <a href="#" class="document-link">
+                            <span class="document-icon">📊</span>
+                           Algorithm performance evaluation
+                        </a>
+                    </li>
+                    <li class="document-item">
+                        <a href="#" class="document-link">
+                            <span class="document-icon">📝</span>
+                            Weekly progress report (updated weekly)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+<div class="card">
+                <h3 class="card-title">Conference records
+</h3>
+<!DOCTYPE html>​
+<html lang="en">​
+​
+<head>​
+    <meta charset="UTF - 8">​
+    <meta name="viewport" content="width=device-width, initial - scale = 1.0">​
+    <title>Project Meeting Minutes</title>​
+</head>​
+​
+<body>​
+    <h2>Meeting 1 - 2025.2.20</h2>​
+    <p>Key discussions and tasks:</p>​
+    <ul>​
+        <li>Xie Yujian is responsible for the Project progress website with modular updates (e.g., user, data, progress bar, etc.). Require github link, project web finished product link or screenshot. To - do: Decide on online document or website after confirmation with mentor.</li>​
+        <li>Wang Ziqi needs to work on the detailed proposal.</li>​
+        <li>Li Zihan is tasked with handling data sources, considering paid APIs, personal budget and reimbursement.</li>​
+        <li>Li Kexin is in charge of the database, evaluating storage costs between Tencent Cloud or others.</li>​
+        <li>Li Zihan is to use open - source existing models for parameter tuning (fine - tuning, renting cards to run models). Need to first analyze the currency trend and output probabilities (give percentages for when to buy and sell).</li>​
+        <li>Need to define the data structure for AI model input and output.</li>​
+        <li>​
+            Specific Function & Module:​
+            <ul>​
+                <li>User Module: Login, registration, verification; My wallet (including selected currency names, transaction history, total assets, etc.); Settings (language).</li>​
+                <li>AI Education Module: Analyze historical data, evaluate previous decisions, propose optimization strategy suggestions, analyze trading profit - loss probabilities, input k - line charts to AI, analyze trading behavior, and evaluate the rationality of holding positions.</li>​
+                <li>Real - time Market: Currency name, price, trend, trading operation panel and other trading information.</li>​
+                <li>Historical Market: Currency name, price, trend, trading operation panel and other trading information, with historical time selection (start and end time).</li>​
+                <li>Trading Interface: Buying and selling prices, price types, quantity.</li>​
+                <li>Trading Back - test: Select historical data, define strategies, simulate execution, and evaluate results.</li>​
+            </ul>​
+        </li>​
+        <li>Report, PPT, Pre are required for beginner.</li>​
+    </ul>​
+​
+    <h2>Meeting 2 - 2025.3.12</h2>​
+    <p>Key discussions and tasks:</p>​
+    <ul>​
+        <li>​
+            Personnel Allocation:​
+            <ul>​
+                <li>Front - end: Wang Ziqi, Li Haitao</li>​
+                <li>Back - end: Li Kexin, Xie Yujian</li>​
+                <li>AI: Li Zihan, Li Kexin</li>​
+                <li>Progress Update Website: Xie Yujian</li>​
+            </ul>​
+        </li>​
+        <li>​
+            Deliverables:​
+            <ul>​
+                <li>3/19: Modify the Detailed Proposal according to the teacher's comments. Wang Ziqi is responsible for the aim part, and others should claim their respective modules.</li>​
+                <li>3/21: Write a document with all pre - project technical solutions in detail.​
+                    <ul>​
+                        <li>Front - end (Li Haitao, Wang Ziqi):​
+                            <ul>​
+                                <li>Language: React.js&CSS, etc.</li>​
+                                <li>Page Design: Refer to Plus500 網頁版交易平臺 | 行業領先的CFD平臺 | 線上交易</li>​
+                                <li>Low - fidelity prototype (simple click interaction) is needed</li>​
+                                <li>Define framework&interface api by module</li>​
+                                <li>Service Deployment: Deploy with the back - end</li>​
+                            </ul>​
+                        </li>​
+                        <li>Back - end (Li Kexin, Xie Yujian):​
+                            <ul>​
+                                <li>Language (go), framework (none)</li>​
+                                <li>Service Deployment: Evaluate between Tencent Cloud (510/half - year) and Alibaba Cloud (68/year); Apply for database: Tencent Cloud (138/month), Alibaba Cloud (99/year)</li>​
+                                <li>Database Design (about 130G for second - level and 3G for minute - level, divide tables such as user, virtual wallet table, order table (orders), trading table (trades_YYYYMM), define fields), draw business flowcharts, etc.</li>​
+                                <li>Demo: Write after the deployment machine is determined.</li>​
+                                <li>Email to confirm if the school designates suppliers for computing power and deployment service machine rental.</li>​
+                            </ul>​
+                        </li>​
+                        <li>AI (Li Zihan, Li Kexin):​
+                            <ul>​
+                                <li>Confirm 4 function points (or 3 + participation in the final report and pre). Research on price prediction links, although LLM cannot do it, ML can. Consider if it can be the 4th function point.</li>​
+                                <li>Budget for all cost - related parts (renting cards, second - level data calls, etc.). Check if the validity period of Algogene's interface supports our use until July. Calculate the budget for using paid platform interfaces. Determine how to fine - tune and what parameters to use to determine its quality. Define how to deploy the model, what platform to use and how to call it. Draw a flowchart. Specify the data required for model training, down to fields (e.g., trading time, currency name, etc.).</li>​
+                            </ul>​
+                        </li>​
+                    </ul>​
+                </li>​
+            </ul>​
+        </li>​
+        <li>Tasks for Xie Yujian:​
+            <ul>​
+                <li>Deploy the progress update website for direct URL access.</li>​
+                <li>Translate the meeting records with GPT and put them in.</li>​
+            </ul>​
+        </li>​
+        <li>​
+            Optimistic Assessment for 4/7:​
+            <ul>​
+                <li>Complete the front - end of the User module.</li>​
+                <li>Complete the back - end of the User module and set up the github repository.</li>​
+                <li>Finish the model fine - tuning training for the AI part.</li>​
+            </ul>​
+        </li>​
+        <li>Next Meeting: 3/23 at 8 pm.</li>​
+    </ul>​
+</body>​
+​
+</html>
+
+                </ul>
+            </div>
+
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>The MSc Computer Science Project at the University of Hong Kong</p>
+            <div class="contact-info">
+                <p>Project leader's contact email 	：<a href="mailto:zhangli@example.com">u3638342@connect.hku.hk</a></p>
+                <p>Project supervisor: Professor Vivien</p>
+                <p>Last updated on March 3th, 2025</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
